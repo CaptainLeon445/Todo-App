@@ -1,0 +1,54 @@
+name: Continous Integration and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install Dependencies
+      run: make install 
+
+    - name: Run Test
+      run: make test
+
+    - name: Build Docker Image
+      run: make build
+
+    - name: Login to Docker Hub
+      if: success()
+      run: echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
+
+    - name: Push Docker image to registry
+      if: success()
+      run: |
+        docker tag simple-app:latest ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REGISTRY}}:latest-tag
+        docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REGISTRY}}:latest-tag
+
+    # - name: SSH into EC2 instance and deploy
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{secrets.EC2_HOST}}
+    #     username: ${{secrets.EC2_username}}
+    #     key: ${{secrets_EC2_SSH_KEY}}
+    #   run: |
+    #     sudo docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REGISTRY}}:latest-tag
+    #     sudo docker stop todo-app || true
+    #     sudo docker rm todo-app || true
+    #     sudo docker run -d -p 3000:3000 --name todo-app ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REGISTRY}}:latest-tag
+    
+
+
+
