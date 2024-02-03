@@ -34,7 +34,7 @@ jobs:
     - name: Push Docker image to registry
       if: success()
       run: |
-        docker tag simple-app:latest ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REGISTRY}}:latest-tag
+        docker tag todo-app:latest ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REGISTRY}}:latest-tag
         docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REGISTRY}}:latest-tag
 
     # - name: SSH into EC2 instance and deploy
