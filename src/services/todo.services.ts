@@ -11,8 +11,8 @@ export default class TodoServices{
      */
     public static async getTodos() {
         const tt = [1,2,34,45,5]
-        const data = await Todo.findAll();
-        return data
+        // const data = await Todo.findAll();
+        return tt
     }
 
     /**

@@ -1,12 +1,19 @@
 import { NextFunction, Response, Request } from "express";
+import { Get, Route } from "tsoa";
 import TodoServices from "../services/todo.services";
 import { AppError } from "../middleware/ErrorHandlers/AppError";
 import Todo from "../models/todo.model";
 
+interface TodoResponse{
+  status: string,
+  message: string,
+  count: number,
+  data: any
+}
+
+
 export default class TodoControllers {
-  /**
-   * getTodos
-   */
+  
   public static async getTodos(
     req: Request,
     res: Response,

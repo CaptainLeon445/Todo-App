@@ -5,6 +5,8 @@
     "outDir": "./dist", // Specify the output directory for compiled code
     "rootDir": "./src", // Specify the source code directory
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*.ts", "express.d.ts"],
   "exclude": ["node_modules"]

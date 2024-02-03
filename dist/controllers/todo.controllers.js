@@ -6,9 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const todo_services_1 = __importDefault(require("../services/todo.services"));
 const AppError_1 = require("../middleware/ErrorHandlers/AppError");
 class TodoControllers {
-    /**
-     * getTodos
-     */
     static async getTodos(req, res, next) {
         try {
             const data = await todo_services_1.default.getTodos();

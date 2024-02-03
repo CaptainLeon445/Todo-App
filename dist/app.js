@@ -6,18 +6,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const logger_1 = __importDefault(require("./logger"));
+const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const globalHandler_1 = require("./middleware/ErrorHandlers/globalHandler");
 const todo_routes_1 = __importDefault(require("./routes/todo.routes"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)("dev"));
+app.use(express_1.default.static("public"));
+// Swagger configuration
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'TESTING TODO API',
+            version: '1.0.0',
+        },
+    },
+    apis: ['./src/routes/*.ts'], // Path to your route files
+};
+const swaggerSpec = (0, swagger_jsdoc_1.default)(swaggerOptions);
+app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerSpec));
 app.get("/", (req, res) => {
     res.status(200).json({
         status: "Success",
         message: "Server is running successfully",
     });
 });
-app.use("/v1/api/todoss", todo_routes_1.default);
+app.use("/v1/api/todos", todo_routes_1.default);
 app.all("*", (req, res, next) => {
     logger_1.default.error(`Can't find ${req.originalUrl} on the server`);
     res.status(404).json({
