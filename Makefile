@@ -5,6 +5,7 @@ test:
 	cd dist && npm  test
 
 build:
+	ls -l
 	docker build -t todo-app:latest -f Dockerfile .
 
 docker-login:
