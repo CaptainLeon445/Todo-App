@@ -9,9 +9,9 @@ class TodoServices {
      * getTodos
      */
     static async getTodos() {
-        const tt = [1, 2, 34, 45, 5];
-        // const data = await Todo.findAll();
-        return tt;
+        // const tt = [1,2,34,45,5]
+        const data = await todo_model_1.default.findAll();
+        return data;
     }
     /**
      * createTodo
