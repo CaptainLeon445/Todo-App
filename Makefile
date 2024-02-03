@@ -8,6 +8,7 @@ build:
 	ls -l
 	docker build -t todo-app:latest -f Dockerfile .
 
+
 docker-login:
 	echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin "${DOCKER_REGISTRY}"
 
