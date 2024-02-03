@@ -5,7 +5,7 @@ test:
 	cd dist && npm  test
 
 build:
-	docker build -t todo-app:latest ./
+	docker build -t todo-app:latest . .
 
 docker-login:
 	echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin "${DOCKER_REGISTRY}"
